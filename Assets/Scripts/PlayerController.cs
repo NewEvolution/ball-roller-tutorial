@@ -24,4 +24,10 @@ public class PlayerController : MonoBehaviour {
 
 		player.AddForce (movement * moveSpeed);
 	}
+
+	void OnTriggerEnter (Collider other) {
+		if(other.gameObject.CompareTag("Collectable")){
+			other.gameObject.SetActive (false);
+		}
+	}
 }
