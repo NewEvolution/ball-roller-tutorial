@@ -1,14 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	private Rigidbody player;
 	public float moveSpeed;
+	public Text countText;
+	public Text winText;
+
+	private Rigidbody player;
+	private int collectionCount;
 
 	// Use this for initialization
 	void Start () {
 		player = GetComponent<Rigidbody> ();
+		collectionCount = 0;
+		winText.text = "";
+		UpdateDisplayCount ();
 	}
 	
 	// Update is called once per frame
@@ -28,6 +36,15 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		if(other.gameObject.CompareTag("Collectable")){
 			other.gameObject.SetActive (false);
+			++collectionCount;
+			UpdateDisplayCount ();
+		}
+	}
+
+	void UpdateDisplayCount () {
+		countText.text = "Count: " + collectionCount.ToString ();
+		if (collectionCount >= 12) {
+			winText.text = "You Win!";
 		}
 	}
 }
